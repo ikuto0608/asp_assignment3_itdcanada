@@ -1,9 +1,17 @@
 ﻿@{
     Page.Title = "Login";
     Layout = "_Layout.cshtml";
+
+    var logined = Request.Params["logined"];
 }
 
-<div>
+<div class="container">
+    @if (logined == "failed")
+    {
+        <div class="alert alert-danger">
+          <strong>Failed!</strong> You couldn't login!
+        </div>
+    }
     <form class="form-inline" action="CarsContentPage.cshtml" method="post">
         <div class="form-group">
             <label class="sr-only" for="exampleInputEmail3">UserName</label>

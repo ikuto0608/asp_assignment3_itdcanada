@@ -2,43 +2,118 @@
     Page.Title = "Cars";
     Layout = "_Layout.cshtml";
 
-    List<Car> cars = Car.all();
+    bool logined = false;
 
+    int car_id = Request.Params["delete_id"].AsInt();
+    bool deletedCar = false;
+    if (car_id > 0)
+    {
+        if (Car.delete(car_id))
+        {
+            deletedCar = true;
+        }
+    }
+    
+    List<Car> cars = Car.all();
+    
+    
+    
     AdminUser user = new AdminUser();
     if (IsPost)
     {
-        var userName = Request.Form["UserName"];
-        var password = Request.Form["Password"];
-        user = AdminUser.findByUserName(userName);
-        if (user.Password == password)
+        if (Request.Params["search"] == "true")
         {
-            Session["user_" + user.ID] = true;
+            var make = Request.Form["Make"];
+            var model = Request.Form["Model"];
+            var year = Request.Form["Year"];
+            var fromPrice = Request.Form["FromPrice"];
+            var toPrice = Request.Form["toPrice"];
+
+            cars = Car.findByMulti(make, model, year, fromPrice, toPrice);
+            
+        } else {
+            var userName = Request.Form["UserName"];
+            var password = Request.Form["Password"];
+            user = AdminUser.findByUserName(userName);
+            if (user.Password == password)
+            {
+                Session["user_" + user.ID] = true;
+                logined = true;
+            }
+            else
+            {
+                Response.Redirect("LoginContentPage.cshtml?logined=failed");
+            }            
         }
     }
 }
 
 <div class="container">
+    @if (logined)
+    {
+        <div class="alert alert-success">
+          <strong>Success!</strong> Logined as Administrator!
+        </div>
+    }
+    
+    @if (deletedCar)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong> Deleted Car!
+        </div>
+    }
     <h2>Cars</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Mileage</th>
-                <th>Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(Car car in cars) {
+    <form action="CarsContentPage.cshtml?search=true" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="Make">Make</label>
+            <input type="text" class="form-control" id="Make" name="Make" placeholder="Make">
+        </div>
+        <div class="form-group">
+            <label for="Model">Model</label>
+            <input type="text" class="form-control" id="Model" name="Model" placeholder="Model">
+        </div>
+        <div class="form-group">
+            <label for="Year">Year</label>
+            <input type="text" class="form-control" id="Year" name="Year" placeholder="Year">
+        </div>
+        <label for="Price">Price</label>
+        <div class="form-group">
+            <div class="col-xs-2">
+                <input type="text" class="form-control" id="FromPrice" name="FromPrice" placeholder="From">
+            </div>
+            <div class="col-xs-2">
+                <input type="text" class="form-control" id="ToPrice" name="ToPrice" placeholder="To">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Search Cars</button>
+
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td><a href="CarDetailContentPage.cshtml?id=@car.ID">@car.Model</a></td>
-                    <td>@car.Year</td>
-                    <td>@car.Mileage</td>
-                    <td><img src="@car.ImagePath" /></td>
+                    <th>Model</th>
+                    <th>Make</th>
+                    <th>Year</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th class="car_modify" style="display:none;">Modify</th>
+                    <th class="car_delete" style="display:none;">Delete</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (Car car in cars)
+                {
+                    <tr>
+                        <td><a href="CarDetailContentPage.cshtml?id=@car.ID">@car.Model</a></td>
+                        <td>@car.Make</td>
+                        <td>@car.Year</td>
+                        <td>@car.Price</td>
+                        <td><img src="@car.ImagePath" /></td>
+                        <td class="car_modify" style="display:none;"><a href="CarModifyContentPage.cshtml?car_id=@car.ID" class="btn btn-warning" role="button">Modify</a></td>
+                        <td class="car_delete" style="display:none;"><a href="CarsContentPage.cshtml?delete_id=@car.ID" class="btn btn-danger" role="button">Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 </div>
 
 <script type="text/javascript">
@@ -50,4 +125,14 @@
     function executeJsfunction() {
         sessionStorage.setItem('user_id', @user.ID);
     };
+</script>
+
+<script type="text/javascript">
+    $(window).load(function () {
+        var id = sessionStorage.getItem('user_id');
+        if (id > 0) {
+            $('.car_modify').css('display', 'table-cell');
+            $('.car_delete').css('display', 'table-cell');
+        }
+    });
 </script>

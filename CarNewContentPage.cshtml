@@ -1,6 +1,16 @@
 ﻿@{
     Page.Title = "CarNew";
     Layout = "_Layout.cshtml";
+
+    int user_id = Request.Params["user_id"].AsInt();
+    if (user_id < 1) {
+        Response.Redirect("LoginContentPage.cshtml");
+    }
+    AdminUser user = AdminUser.findByID(user_id);
+    if (user.ID < 1)
+    {
+        Response.Redirect("LoginContentPage.cshtml?logined=failed");
+    }
 }
 
 <div class="container">

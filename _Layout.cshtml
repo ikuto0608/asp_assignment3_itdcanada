@@ -13,19 +13,34 @@
     </head>
     <body>
         <nav class="navbar navbar-light bg-faded">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">Car Store</a>
             <ul class="nav navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="CarsContentPage.cshtml">Home</a>
+                    <a class="nav-link" href="CarsContentPage.cshtml">Cars List</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="CarNewContentPage.cshtml">New Car</a>
+                    <a id="new_car" class="nav-link" href="CarNewContentPage.cshtml">Add New Car</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="LoginContentPage.cshtml">Login</a>
+                    <a class="nav-link" href="LoginContentPage.cshtml">Admin Login</a>
                 </li>
             </ul>
         </nav>
         @RenderBody()
-    </body>
-</html>
+        <script type="text/javascript">
+            function loginedID() {
+                var id = sessionStorage.getItem('user_id');
+                return id;
+            }
+
+            $('#new_car').click(function (event) {
+                var id = loginedID();
+                if (id > 0) {
+                    $("#new_car").attr("href", "CarNewContentPage.cshtml?user_id=" + id);
+                }
+            });
+
+        </script>
+
+        </body>
+    </html>
