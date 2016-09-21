@@ -1,0 +1,53 @@
+﻿@{
+    Page.Title = "Cars";
+    Layout = "_Layout.cshtml";
+
+    List<Car> cars = Car.all();
+
+    AdminUser user = new AdminUser();
+    if (IsPost)
+    {
+        var userName = Request.Form["UserName"];
+        var password = Request.Form["Password"];
+        user = AdminUser.findByUserName(userName);
+        if (user.Password == password)
+        {
+            Session["user_" + user.ID] = true;
+        }
+    }
+}
+
+<div class="container">
+    <h2>Cars</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Mileage</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Car car in cars) {
+                <tr>
+                    <td><a href="CarDetailContentPage.cshtml?id=@car.ID">@car.Model</a></td>
+                    <td>@car.Year</td>
+                    <td>@car.Mileage</td>
+                    <td><img src="@car.ImagePath" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    @if (user.ID > 0)
+    {
+        @:executeJsfunction();
+    }
+    
+    function executeJsfunction() {
+        sessionStorage.setItem('user_id', @user.ID);
+    };
+</script>

@@ -1,0 +1,58 @@
+﻿@{
+    Page.Title = "CarDetail";
+    Layout = "_Layout.cshtml";
+
+    var id = Request.Params["id"].AsInt();
+    Car car = Car.findByID(id);
+}
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">ID</div>
+        <div class="panel-body">@car.ID</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">VIN</div>
+        <div class="panel-body">@car.VIN</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Make</div>
+        <div class="panel-body">@car.Make</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Model</div>
+        <div class="panel-body">@car.Model</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Year</div>
+        <div class="panel-body">@car.Year</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Color</div>
+        <div class="panel-body">@car.Color</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Mileage</div>
+        <div class="panel-body">@car.Mileage</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Accidents</div>
+        <div class="panel-body">@car.Accidents</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">TotalDamageToDate</div>
+        <div class="panel-body">@car.TotalDamageToDate</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Price</div>
+        <div class="panel-body">@car.Price</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">ImagePath</div>
+        <div class="panel-body"><img src="@car.ImagePath" /></div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">SpecialFeatures</div>
+        <div class="panel-body">@car.SpecialFeatures</div>
+    </div>
+</div>

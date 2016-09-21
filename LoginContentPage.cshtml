@@ -1,0 +1,18 @@
+﻿@{
+    Page.Title = "Login";
+    Layout = "_Layout.cshtml";
+}
+
+<div>
+    <form class="form-inline" action="CarsContentPage.cshtml" method="post">
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputEmail3">UserName</label>
+            <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Enter UserName">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword3">Password</label>
+            <input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    Page.Title = "CarNew";
+    Layout = "_Layout.cshtml";
+}
+
+<div class="container">
+    <form action="CarShowContentPage.cshtml" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="VIN">VIN</label>
+            <input type="text" class="form-control" id="VIN" name="VIN" placeholder="VIN">
+        </div>
+        <div class="form-group">
+            <label for="Make">Make</label>
+            <input type="text" class="form-control" id="Make" name="Make" placeholder="Make">
+        </div>
+        <div class="form-group">
+            <label for="Model">Model</label>
+            <input type="text" class="form-control" id="Model" name="Model" placeholder="Model">
+        </div>
+        <div class="form-group">
+            <label for="Year">Year</label>
+            <input type="text" class="form-control" id="Year" name="Year" placeholder="Year">
+        </div>
+        <div class="form-group">
+            <label for="Color">Color</label>
+            <input type="text" class="form-control" id="Color" name="Color" placeholder="Color">
+        </div>
+        <div class="form-group">
+            <label for="Mileage">Mileage</label>
+            <input type="text" class="form-control" id="Mileage" name="Mileage" placeholder="Mileage">
+        </div>
+        <div class="form-group">
+            <label for="Accidents">Accidents</label>
+            <input type="text" class="form-control" id="Accidents" name="Accidents" placeholder="Accidents">
+        </div>
+        <div class="form-group">
+            <label for="TotalDamageToDate">TotalDamageToDate</label>
+            <input type="text" class="form-control" id="TotalDamageToDate" name="TotalDamageToDate" placeholder="TotalDamageToDate">
+        </div>
+        <div class="form-group">
+            <label for="Price">Price</label>
+            <input type="text" class="form-control" id="Price" name="Price" placeholder="Price">
+        </div>
+        <div class="form-group">
+            <label for="Image">Image</label>
+            <input type="file" class="form-control" id="Image" name="Image" placeholder="Image">
+        </div>
+        <div class="form-group">
+            <label for="SpecialFeatures">SpecialFeatures</label>
+            <input type="text" class="form-control" id="SpecialFeatures" name="SpecialFeatures" placeholder="SpecialFeatures">
+        </div>
+        <button type="submit" class="btn btn-primary">Create Car</button>
+    </form>
+</div>
+

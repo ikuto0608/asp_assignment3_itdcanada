@@ -1,0 +1,111 @@
+﻿@{
+    Page.Title = "CarNew";
+    Layout = "_Layout.cshtml";
+
+    var vin = "";
+    var make = "";
+    var model = "";
+    var year = 0;
+    var color = "";
+    var mileage = 0;
+    var accidents = "";
+    var totalDamageToDate = "";
+    var price = 0;
+    var imagePath = "";
+    var specialFeatures = "";
+
+    Car car = new Car();
+    
+    if (IsPost)
+    {
+        vin = Request.Form["VIN"];
+        make = Request.Form["Make"];
+        model = Request.Form["Model"];
+        year = Request.Form["Year"].AsInt();
+        color = Request.Form["Color"];
+        mileage = Request.Form["Mileage"].AsInt();
+        accidents = Request.Form["Accidents"];
+        totalDamageToDate = Request.Form["TotalDamageToDate"];
+        price = Request.Form["Price"].AsInt();
+        specialFeatures = Request.Form["SpecialFeatures"];
+
+
+        if (Request.Files.Count > 0)
+        {
+            var file = Request.Files[0];
+
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                imagePath = "Images/" + fileName;
+                file.SaveAs(path);
+            }
+        }
+
+        car.VIN = vin;
+        car.Make = make;
+        car.Model = model;
+        car.Year = year;
+        car.Color = color;
+        car.Mileage = mileage;
+        car.Accidents = accidents;
+        car.TotalDamageToDate = totalDamageToDate;
+        car.Price = price;
+        car.ImagePath = imagePath;
+        car.SpecialFeatures = specialFeatures;
+
+        car.save();
+    }
+}
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">ID</div>
+        <div class="panel-body">@car.ID</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">VIN</div>
+        <div class="panel-body">@car.VIN</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Make</div>
+        <div class="panel-body">@car.Make</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Model</div>
+        <div class="panel-body">@car.Model</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Year</div>
+        <div class="panel-body">@car.Year</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Color</div>
+        <div class="panel-body">@car.Color</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Mileage</div>
+        <div class="panel-body">@car.Mileage</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Accidents</div>
+        <div class="panel-body">@car.Accidents</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">TotalDamageToDate</div>
+        <div class="panel-body">@car.TotalDamageToDate</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Price</div>
+        <div class="panel-body">@car.Price</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">ImagePath</div>
+        <div class="panel-body"><img src="@car.ImagePath" /></div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">SpecialFeatures</div>
+        <div class="panel-body">@car.SpecialFeatures</div>
+    </div>
+</div>
